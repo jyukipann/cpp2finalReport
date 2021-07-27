@@ -1,3 +1,4 @@
+//T319059 Tanimoto Juki
 #include<iostream>
 #include <vector>
 #include <algorithm>
@@ -190,7 +191,7 @@ int main(){
 	while(!pazzle.isFinish()){
 		pazzle.show();
 		pazzle.renewMovableList();
-		cout << "wª a© s« d¨ : ";
+		cout << "w(up) a(right) s(dwon) d(left) : ";
 		pazzle.move(pazzle.getMoveDir());
 	}
 	pazzle.show();
