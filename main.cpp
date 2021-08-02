@@ -148,17 +148,28 @@ class pazzle_8{
 	//load pazzle
 	// n pazzle(n*n) turn
 	void loadData(){
-		
+		ifstream save_file("save_data.txt", ios::in | ios::binary);
+		if(!save_file){
+			cout << "error opening save_file" << endl;
+			exit(0);
+		}
+		save_file.read((char*)&n,sizeof(n));
+		save_file.read((char*)&pazzle[0], pazzle.size()*sizeof(pazzle[0]));
+		save_file.read((char*)&turn,sizeof(turn));
+		save_file.read((char*)&blank,sizeof(blank));
+		save_file.close();
 	}
 
 	//save current pazzle
 	// n pazzle(n*n) turn
 	void saveData(){
 		ofstream save_file;
-		save_file.open("save_data.txt");
-		save_file << n << endl;
-		//save_file << pazzle << endl;
-		save_file << turn << endl;
+		save_file.open("save_data.txt", ios::out | ios::binary);
+		save_file.write((char*)&n,sizeof(n));
+		save_file.write((char*)&pazzle[0], pazzle.size()*sizeof(pazzle[0]));
+		save_file.write((char*)&turn,sizeof(turn));
+		save_file.write((char*)&blank,sizeof(blank));
+		save_file.close();
 	}
 
 	char getMoveDir(void){
@@ -166,11 +177,18 @@ class pazzle_8{
 		renewMovableList();
 		char input = 'q';
 		do{
+			cout << "w(up) a(right) s(dwon) d(left) r(save) l(load) q(quit): ";
 			cin >> input;
-			if(input == 's'){
+			if(input == 'r'){
 				saveData();
+				cout << "save complated" << endl;
 			}else if(input == 'l'){
 				loadData();
+				show();
+				cout << "load complated" << endl;
+			}else if(input == 'q'){
+				cout << "quit!" << endl;
+				exit(0);
 			}
 		}while(!((input == 'w' || input == 'a' || input == 's' || input == 'd') && Movable[input]));
 		return input;
@@ -213,7 +231,6 @@ int main(){
 	while(!pazzle.isFinish()){
 		pazzle.show();
 		pazzle.renewMovableList();
-		cout << "w(up) a(right) s(dwon) d(left) r(save) l(load): ";
 		pazzle.move(pazzle.getMoveDir());
 	}
 	pazzle.show();

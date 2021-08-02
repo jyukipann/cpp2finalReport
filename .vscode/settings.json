@@ -3,6 +3,10 @@
 		"vector": "cpp",
 		"iomanip": "cpp",
 		"iostream": "cpp",
-		"random": "cpp"
+		"random": "cpp",
+		"istream": "cpp",
+		"iosfwd": "cpp",
+		"ostream": "cpp",
+		"map": "cpp"
 	}
 }
