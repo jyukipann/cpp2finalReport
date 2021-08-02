@@ -7,6 +7,7 @@
 #include <ctime>
 #include <iomanip> 
 #include <numeric>
+#include <fstream>
 using namespace std;
 
 class pazzle_8{
@@ -144,12 +145,33 @@ class pazzle_8{
 		return true;
 	}
 
+	//load pazzle
+	// n pazzle(n*n) turn
+	void loadData(){
+		
+	}
+
+	//save current pazzle
+	// n pazzle(n*n) turn
+	void saveData(){
+		ofstream save_file;
+		save_file.open("save_data.txt");
+		save_file << n << endl;
+		//save_file << pazzle << endl;
+		save_file << turn << endl;
+	}
+
 	char getMoveDir(void){
 		//cout << "getMoveDir" << endl;
 		renewMovableList();
 		char input = 'q';
 		do{
 			cin >> input;
+			if(input == 's'){
+				saveData();
+			}else if(input == 'l'){
+				loadData();
+			}
 		}while(!((input == 'w' || input == 'a' || input == 's' || input == 'd') && Movable[input]));
 		return input;
 	}
@@ -191,7 +213,7 @@ int main(){
 	while(!pazzle.isFinish()){
 		pazzle.show();
 		pazzle.renewMovableList();
-		cout << "w(up) a(right) s(dwon) d(left) : ";
+		cout << "w(up) a(right) s(dwon) d(left) r(save) l(load): ";
 		pazzle.move(pazzle.getMoveDir());
 	}
 	pazzle.show();
